@@ -330,37 +330,51 @@ to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
 
 
 %hook UILabel
-- (void)setText:(NSString *)text { NSString *t = RCCNTranslate(text); %orig(t); }
+- (void)setText:(NSString *)text {
+    NSString *t = RCCNTranslate(text); %orig(t);
+}
 %end
 
 %hook UITextField
-- (void)setPlaceholder:(NSString *)p { NSString *t = RCCNTranslate(p); %orig(t); }
+- (void)setPlaceholder:(NSString *)p {
+    NSString *t = RCCNTranslate(p); %orig(t);
+}
 %end
 
 %hook UIButton
-- (void)setTitle:(NSString *)title forState:(UIControlState)state { NSString *t = RCCNTranslate(title); %orig(t, state); }
+- (void)setTitle:(NSString *)title forState:(UIControlState)state {
+    NSString *t = RCCNTranslate(title); %orig(t, state);
+}
 %end
 
 %hook UIBarButtonItem
 - (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action {
     NSString *t = RCCNTranslate(title); return %orig(t, style, target, action);
 }
-- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
+- (void)setTitle:(NSString *)title {
+    NSString *t = RCCNTranslate(title); %orig(t);
+}
 %end
 
 %hook UIAlertController
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)style {
     NSString *t = RCCNTranslate(title); NSString *m = RCCNTranslate(message); return %orig(t, m, style);
 }
-- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
-- (void)setMessage:(NSString *)message { NSString *t = RCCNTranslate(message); %orig(t); }
+- (void)setTitle:(NSString *)title {
+    NSString *t = RCCNTranslate(title); %orig(t);
+}
+- (void)setMessage:(NSString *)message {
+    NSString *t = RCCNTranslate(message); %orig(t);
+}
 %end
 
 %hook UIAlertAction
 - (instancetype)initWithTitle:(NSString *)title style:(UIAlertActionStyle)style handler:(void (^)(UIAlertAction *))handler {
     NSString *t = RCCNTranslate(title); return %orig(t, style, handler);
 }
-- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
+- (void)setTitle:(NSString *)title {
+    NSString *t = RCCNTranslate(title); %orig(t);
+}
 %end
 
 %hook UITextField
@@ -373,7 +387,9 @@ to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
 - (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action {
     NSString *t = RCCNTranslate(title); return %orig(t, style, target, action);
 }
-- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
+- (void)setTitle:(NSString *)title {
+    NSString *t = RCCNTranslate(title); %orig(t);
+}
 %end
 
 %hook UIMenu
