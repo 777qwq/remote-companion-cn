@@ -324,63 +324,61 @@ to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^Could not resolve host '(.+)'$" options:0 error:nil], @[@"\u65e0\u6cd5\u89e3\u6790\u4e3b\u673a\u300c{0}\u300d"] ]];
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^last ([0-9.]+), ([0-9.]+)$" options:0 error:nil], @[@"\u4e0a\u6b21 {0}, {1}"] ]];
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^Tap Target \\((\\d+)\\)$" options:0 error:nil], @[@"\u70b9\u51fb\u76ee\u6807\uff08{0}\uff09"] ]];
-    [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^RemoteCompanion Tap Test\\nhits (\\d+)\\n(.*)$" options:0 error:nil], @[@"RemoteCompanion \u70b9\u51fb\u6d4b\u8bd5
-\u547d\u4e2d {0}
-{1}"] ]];
+    [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^RemoteCompanion Tap Test\\nhits (\\d+)\\n(.*)$" options:0 error:nil], @[@"RemoteCompanion \u70b9\u51fb\u6d4b\u8bd5\n\u547d\u4e2d {0}\n{1}"] ]];
     RCCNRegex = arr copy;
 }
 
 
 %hook UILabel
-- (void)setText:(NSString *)text { %orig(RCCNTranslate(text)); }
+- (void)setText:(NSString *)text { NSString *t = RCCNTranslate(text); %orig(t); }
 %end
 
 %hook UITextField
-- (void)setPlaceholder:(NSString *)p { %orig(RCCNTranslate(p)); }
+- (void)setPlaceholder:(NSString *)p { NSString *t = RCCNTranslate(p); %orig(t); }
 %end
 
 %hook UIButton
-- (void)setTitle:(NSString *)title forState:(UIControlState)state { %orig(RCCNTranslate(title), state); }
+- (void)setTitle:(NSString *)title forState:(UIControlState)state { NSString *t = RCCNTranslate(title); %orig(t, state); }
 %end
 
 %hook UIBarButtonItem
 - (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action {
-    return %orig(RCCNTranslate(title), style, target, action);
+    NSString *t = RCCNTranslate(title); return %orig(t, style, target, action);
 }
-- (void)setTitle:(NSString *)title { %orig(RCCNTranslate(title)); }
+- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
 %end
 
 %hook UIAlertController
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)style {
-    return %orig(RCCNTranslate(title), RCCNTranslate(message), style);
+    NSString *t = RCCNTranslate(title); NSString *m = RCCNTranslate(message); return %orig(t, m, style);
 }
-- (void)setTitle:(NSString *)title { %orig(RCCNTranslate(title)); }
-- (void)setMessage:(NSString *)message { %orig(RCCNTranslate(message)); }
+- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
+- (void)setMessage:(NSString *)message { NSString *t = RCCNTranslate(message); %orig(t); }
 %end
 
 %hook UIAlertAction
 - (instancetype)initWithTitle:(NSString *)title style:(UIAlertActionStyle)style handler:(void (^)(UIAlertAction *))handler {
-    return %orig(RCCNTranslate(title), style, handler);
+    NSString *t = RCCNTranslate(title); return %orig(t, style, handler);
 }
-- (void)setTitle:(NSString *)title { %orig(RCCNTranslate(title)); }
+- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
 %end
 
 %hook UITextField
 - (void)setPlaceholder:(NSString *)placeholder {
-    %orig(RCCNTranslate(placeholder));
+    NSString *t = RCCNTranslate(placeholder); %orig(t);
 }
 %end
 
 %hook UIBarButtonItem
 - (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action {
-    return %orig(RCCNTranslate(title), style, target, action);
+    NSString *t = RCCNTranslate(title); return %orig(t, style, target, action);
 }
-- (void)setTitle:(NSString *)title { %orig(RCCNTranslate(title)); }
+- (void)setTitle:(NSString *)title { NSString *t = RCCNTranslate(title); %orig(t); }
 %end
 
 %hook UIMenu
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image identifier:(UIMenuIdentifier)identifier options:(UIMenuOptions)options children:(NSArray<UIMenuElement *> *)children {
-    return %orig(RCCNTranslate(title), image, identifier, options, children);
+    NSString *t = RCCNTranslate(title); return %orig(t, image, identifier, options, children);
 }
 %end
 
