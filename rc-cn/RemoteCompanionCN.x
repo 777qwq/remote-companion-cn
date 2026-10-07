@@ -654,9 +654,15 @@ static void RCCNInit(void) {
     NSString *t = RCCNTranslate(text); %orig(t);
 }
 - (void)setAttributedText:(NSAttributedString *)text {
-    if (!text) { %orig; return; }
+    if (!text) {
+        %orig;
+        return;
+    }
     NSString *t = RCCNTranslate(text.string);
-    if ([t isEqualToString:text.string]) { %orig; return; }
+    if ([t isEqualToString:text.string]) {
+        %orig;
+        return;
+    }
     NSMutableAttributedString *at = [text mutableCopy];
     [at replaceCharactersInRange:NSMakeRange(0, at.length) withString:t];
     %orig(at);
