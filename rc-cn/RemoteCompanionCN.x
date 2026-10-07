@@ -267,9 +267,7 @@ static void RCCNInit(void) {
         @"x y ms  (e.g. 195 422 800)" : @"x y \u6beb\u79d2\uff08\u5982 195 422 800\uff09",
         @"x1 y1 x2 y2  (e.g. 195 700 195 200)" : @"x1 y1 x2 y2\uff08\u5982 195 700 195 200\uff09",
         @"192.168.1.50 or broker.local" : @"\u5982 192.168.1.50 \u6216 broker.local",
-        @"TAP SCREEN NOW
-to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
-\u4ee5\u5f55\u5236\u5750\u6807",
+        @"TAP SCREEN NOW\nto record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55\n\u4ee5\u5f55\u5236\u5750\u6807",
         @"Recording tap in 1..." : @"1 \u79d2\u540e\u5f55\u5236\u70b9\u51fb\u2026",
         @"Recording tap in 2..." : @"2 \u79d2\u540e\u5f55\u5236\u70b9\u51fb\u2026",
         @"Recording tap in 3..." : @"3 \u79d2\u540e\u5f55\u5236\u70b9\u51fb\u2026",
@@ -325,7 +323,7 @@ to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^last ([0-9.]+), ([0-9.]+)$" options:0 error:nil], @[@"\u4e0a\u6b21 {0}, {1}"] ]];
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^Tap Target \\((\\d+)\\)$" options:0 error:nil], @[@"\u70b9\u51fb\u76ee\u6807\uff08{0}\uff09"] ]];
     [arr addObject:@[ [[NSRegularExpression alloc] initWithPattern:@"^RemoteCompanion Tap Test\\nhits (\\d+)\\n(.*)$" options:0 error:nil], @[@"RemoteCompanion \u70b9\u51fb\u6d4b\u8bd5\n\u547d\u4e2d {0}\n{1}"] ]];
-    RCCNRegex = arr copy;
+    RCCNRegex = [arr copy];
 }
 
 
@@ -377,20 +375,7 @@ to record coordinates" : @"\u73b0\u5728\u70b9\u51fb\u5c4f\u5e55
 }
 %end
 
-%hook UITextField
-- (void)setPlaceholder:(NSString *)placeholder {
-    NSString *t = RCCNTranslate(placeholder); %orig(t);
-}
-%end
 
-%hook UIBarButtonItem
-- (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action {
-    NSString *t = RCCNTranslate(title); return %orig(t, style, target, action);
-}
-- (void)setTitle:(NSString *)title {
-    NSString *t = RCCNTranslate(title); %orig(t);
-}
-%end
 
 %hook UIMenu
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image identifier:(UIMenuIdentifier)identifier options:(UIMenuOptions)options children:(NSArray<UIMenuElement *> *)children {
