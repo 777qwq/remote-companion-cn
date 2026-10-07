@@ -1,0 +1,26 @@
+name: Build
+on: push
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ldid
+        run: brew install ldid
+      - name: Setup Theos (lightweight + 16.5 SDK)
+        run: |
+          git clone --depth 1 https://github.com/theos/theos.git $HOME/theos
+          cd $HOME/theos && git submodule update --init --recursive vendor
+          mkdir -p $HOME/theos/sdks
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/theos/sdks.git $HOME/theos/sdks-tmp
+          cd $HOME/theos/sdks-tmp && git sparse-checkout set iPhoneOS16.5.sdk
+          mv $HOME/theos/sdks-tmp/iPhoneOS16.5.sdk $HOME/theos/sdks/
+      - name: Build (rootless)
+        run: |
+          export THEOS=$HOME/theos
+          cd rc-cn
+          make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deb
+          path: rc-cn/packages/*.deb

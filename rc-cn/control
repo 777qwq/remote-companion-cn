@@ -1,0 +1,9 @@
+Package: com.saihgupr.remotecompanioncn
+Name: RemoteCompanion CN (Externalized)
+Version: 6.0.0-cn1
+Architecture: iphoneos-arm64
+Description: Chinese localization patch for RemoteCompanion. Injects translated UI strings at runtime. Does not modify original files.
+Depends: mobilesubstrate
+Maintainer: 777qwq
+Author: 777qwq
+Section: Localization
