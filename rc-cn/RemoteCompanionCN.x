@@ -15,12 +15,12 @@ static NSString *RCCNTranslate(NSString *src) {
     for (NSArray *pair in RCCNRegex) {
         NSRegularExpression *re = pair[0];
         NSArray *templates = pair[1];
-        NSTextCheckingResult *m = [re firstMatchInString:src options:0 range:NSMakeRange(0, src.length)];
-        if (!m) continue;
+        NSTextCheckingResult *q = [re firstMatchInString:src options:0 range:NSMakeRange(0, src.length)];
+        if (!q) continue;
         for (NSString *tpl in templates) {
             NSString *out = tpl;
-            for (NSUInteger i = 0; i < m.numberOfRanges - 1 && i < 3; i++) {
-                NSString *val = [src substringWithRange:[m rangeAtIndex:i + 1]];
+            for (NSUInteger i = 0; i < q.numberOfRanges - 1 && i < 3; i++) {
+                NSString *val = [src substringWithRange:[q rangeAtIndex:i + 1]];
                 out = [out stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"{%lu}", (unsigned long)i] withString:val];
             }
             return out;
@@ -657,9 +657,9 @@ static void RCCNInit(void) {
     if (!text) { %orig; return; }
     NSString *t = RCCNTranslate(text.string);
     if ([t isEqualToString:text.string]) { %orig; return; }
-    NSMutableAttributedString *m = [text mutableCopy];
-    [m replaceCharactersInRange:NSMakeRange(0, m.length) withString:t];
-    %orig(m);
+    NSMutableAttributedString *at = [text mutableCopy];
+    [at replaceCharactersInRange:NSMakeRange(0, at.length) withString:t];
+    %orig(at);
 }
 %end
 
